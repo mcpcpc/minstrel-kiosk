@@ -44,18 +44,18 @@ do_setup_container() {
   podman rm minstrel
   #podman pull ghcr.io/mcpcpc/minstrel:latest
   git clone http://github.com/mcpcpc/minstrel
-  buildah bud -t minstrel minstrel/
+  buildah bud -t minstrel /home/prod/minstrel/
   podman run -dt -p 8080:8080 \
     --name minstrel \
-    --volume /home/prod/:/usr/local/var/minstrel-instance \
+    --volume /home/prod/:/app/minstrel/instance \
     minstrel
+  podman exec quart --app minstrel init-db
 }
 
 do_setup_service() {
-  rm /home/prod/*.service
   podman generate systemd --new --files --name minstrel
   mkdir -p /home/prod/.config/systemd/user
-  cp *.service /home/prod/.config/systemd/user
+  cp container-minstrel.service /home/prod/.config/systemd/user
   systemctl --user daemon-reload
   systemctl --user start container-minstrel.service
   systemctl --user enable container-minstrel.service
