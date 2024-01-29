@@ -1,12 +1,9 @@
 #!/bin/sh
 #
-# Minstrel Configuration Tool for Kiosk Setup
+# Minstrel Kiosk Configuration Tool
 #
 # Author: Michael Czigler
 # Version: 1.0.0
-#
-# This configuration tool is based on the 
-# usage of Raspbian (Bookworm).
 #
 
 ASK_TO_REBOOT=0
