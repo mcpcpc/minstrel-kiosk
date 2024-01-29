@@ -41,12 +41,12 @@ do_install_requirements() {
 
 do_setup_container() {
   podman stop minstrel
-  podman rm mintrel
+  podman rm minstrel
   #podman pull ghcr.io/mcpcpc/minstrel:latest
   git clone http://github.com/mcpcpc/minstrel
   buildah bud -t minstrel minstrel/
   podman run -dt -p 8080:8080 \
-    --name minstrel
+    --name minstrel \
     --volume /home/prod/:/usr/local/var/minstrel-instance \
     minstrel
 }
