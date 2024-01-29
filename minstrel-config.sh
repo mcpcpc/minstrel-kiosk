@@ -69,9 +69,9 @@ do_kiosk_mode() {
   snap install wpe-webkit-mir-kiosk
   snap connect wpe-webkit-mir-kiosk:wayland
   snap set wpe-webkit-mir-kiosk url=http://127.0.0.1:8080
-  snap start wpe-webkit-mir-kiosk
   snap set ubuntu-frame-osk daemon=true
   snap set wpe-webkit-mir-kiosk daemon=true
+  snap start wpe-webkit-mir-kiosk
   snap set ubuntu-frame daemon=true
 }
 
