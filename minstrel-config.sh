@@ -34,16 +34,16 @@ do_finish() {
   exit 0
 }
 
-do_install_requirements() {
+do_install_dependencies() {
   apt update && apt install -y podman snapd
   ASK_TO_REBOOT=1
 }
 
 do_setup_container() {
+  rm -rf minstrel
+  git clone http://github.com/mcpcpc/minstrel
   podman stop minstrel
   podman rm minstrel
-  #podman pull ghcr.io/mcpcpc/minstrel:latest
-  git clone http://github.com/mcpcpc/minstrel
   buildah bud -t minstrel /home/prod/minstrel/
   podman run -dt -p 8080:8080 \
     --name minstrel \
@@ -93,7 +93,7 @@ while true; do
     do_finish
   elif [ $RET -eq 0 ]; then
     case "$FUN" in
-      1\ *) do_install_requirements ;;
+      1\ *) do_install_dependencies ;;
       2\ *) do_setup_container ;;
       3\ *) do_setup_service ;;
       4\ *) do_kiosk_mode ;;
