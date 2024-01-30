@@ -37,16 +37,13 @@ do_install_dependencies() {
 }
 
 do_setup_container() {
-  rm -rf minstrel
-  git clone http://github.com/mcpcpc/minstrel
   podman stop minstrel
   podman rm minstrel
-  buildah bud -t minstrel /home/prod/minstrel/
+  podman pull pull ghcr.io/mcpcpc/minstrel:latest
   podman run -dt -p 8080:8080 \
     --name minstrel \
-    --volume /home/prod/:/app/minstrel/instance \
+    --volume /home/prod/:/app/instance \
     minstrel
-  podman exec quart --app minstrel init-db
 }
 
 do_setup_service() {
